@@ -190,12 +190,14 @@ public class WXPayUtil {
         String[] keyArray = keySet.toArray(new String[keySet.size()]);
         Arrays.sort(keyArray);
         StringBuilder sb = new StringBuilder();
+        String tempV = null;
         for (String k : keyArray) {
             if (k.equals(WXPayConstants.FIELD_SIGN)) {
                 continue;
             }
-            if (data.get(k).trim().length() > 0) // 参数值为空，则不参与签名
-                sb.append(k).append("=").append(data.get(k).trim()).append("&");
+            tempV = data.get(k);
+            if (null != tempV && tempV.trim().length() > 0) // 参数值为空，则不参与签名
+                sb.append(k).append("=").append(tempV.trim()).append("&");
         }
         sb.append("key=").append(key);
         if (SignType.MD5.equals(signType)) {
